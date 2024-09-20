@@ -94,6 +94,7 @@ public class YandexAfterSearchPage extends BasePage{
                 .map(SelenideElement::getText)
                 .filter(text ->values.stream().noneMatch(text::contains))
                 .collect(Collectors.toList());
+
         Assertions.assertTrue(nonMatchingElements.isEmpty(),
                 "Не все элементы соответствуют фильтру! Несоответствующие элементы: " + nonMatchingElements);
 
