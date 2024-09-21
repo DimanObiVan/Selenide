@@ -13,7 +13,7 @@ public static Stream<Arguments> dataForYandexMarket () {
 //    values.add("ASUS");
     values.add("BQ");
 return Stream.of(
-        Arguments.of("Электроника", "Смартфоны", values)
+        Arguments.of("Дом", "Грим1", values)
 );
 }
 }

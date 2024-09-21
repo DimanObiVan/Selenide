@@ -14,7 +14,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class BaseTests {
     @BeforeAll
     public static void beforeAll(){
-        SelenideLogger.addListener("AllureSelenide",new CustomAllureSelenide().screenshots(true).savePageSource(true));
+        Configuration.timeout = 10000;
+//        SelenideLogger.addListener("AllureSelenide",new CustomAllureSelenide().screenshots(true).savePageSource(true));
 
     }
 
