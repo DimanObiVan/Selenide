@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
 import static helpers.Wait.waitForStaleness;
 
 public class YandexAfterSearchPage extends BasePage{
@@ -22,7 +23,8 @@ public class YandexAfterSearchPage extends BasePage{
     /**
      * Кнопка показать еще
      */
-    private By openMoreButton = By.xpath("//div[contains(@data-zone-data,'Производитель')]//button");
+//    private By openMoreButton = By.xpath("//div[contains(@data-zone-data,'Производитель')]//button");
+    private By openMoreButton = By.xpath("//h4[contains(text(),'Производитель')]/ancestor::fieldset//button");
     /**
      * Поле ввода производителя
      */
@@ -65,7 +67,8 @@ public class YandexAfterSearchPage extends BasePage{
     public YandexAfterSearchPage setManufacturers(List<String> values) {
         for (String value : values) {
             //Ждем появление кнопки Показать еще и нажимаем
-            $(openMoreButton).click();
+            $(openMoreButton)
+                    .click();
             //Ждем появление поля для ввода и вводим название
             $(inputField).sendKeys(value);
             //Ждем появление фильтра по названию и отмечаем чекбокс

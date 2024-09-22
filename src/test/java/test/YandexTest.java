@@ -23,49 +23,6 @@ import static helpers.Wait.waitForStaleness;
 public class YandexTest extends BaseTests {
     @ParameterizedTest
     @MethodSource("helpers.DataProvider#dataForYandexMarket")
-    public void test(String category, String item, List<String> values) throws InterruptedException {
-        open("https://market.yandex.ru/");
-        WebDriverRunner.getWebDriver().manage().window().maximize();
-        $(By.xpath("//div[@data-zone-name='catalog']/button")).click();
-        $$(By.xpath("//li[@data-zone-name='category-link']/a"))
-                .findBy(Condition
-                        .text(category))
-                .hover();
-        $$(By.xpath("//ul[@data-autotest-id='subItems']//a"))
-                .findBy(Condition
-                        .text(item)).click();
-        $(By.xpath("//h1[@data-auto='title']"))
-                .shouldHave(Condition
-                        .text(item));
-        for (String value : values) {
-            //Ждем появление кнопки Показать еще и нажимаем
-            $(By.xpath("//div[contains(@data-zone-data,'Производитель')]//button")).click();
-            //Ждем появление поля для ввода и вводим название
-            $(By.xpath("//div[contains(@data-zone-data,'Производитель')]//input")).sendKeys(value);
-            //Ждем появление фильтра по названию и отмечаем чекбокс
-            $$(By.xpath("//div[contains(@data-zone-data,'Производитель')]//*[@role='checkbox']"))
-                    .findBy(Condition.text(value))
-                    .click();
-            ;
-            //ждем, когда прогрузится список
-            waitForStaleness($(By.xpath("//div[@data-apiary-widget-name='@marketfront/SerpEntity'][2]")));
-        }
-        sleep(5000);
-        Scroller.scrollWithJSq();
-        sleep(5000);
-
-       ElementsCollection elements =  $$(By.xpath("//div[@data-apiary-widget-name='@light/Organic']//span[@itemprop='name']"));
-        List<String> nonMatchingElements = elements.stream()
-                .map(SelenideElement::getText)
-                .filter(text ->values.stream().noneMatch(text::contains))
-                        .collect(Collectors.toList());
-        Assertions.assertTrue(nonMatchingElements.isEmpty(),
-                "Не все элементы соответствуют фильтру! Несоответствующие элементы: " + nonMatchingElements);
-
-    }
-
-    @ParameterizedTest
-    @MethodSource("helpers.DataProvider#dataForYandexMarket")
     public void test1(String category, String item, List<String> values) throws InterruptedException {
         open(testsProperties.yandexUrl(), YandexBasePage.class)
                 .goToCatalogue()

@@ -23,16 +23,27 @@ public class YandexBasePage extends BasePage {
      * xpath категорий
      */
     private By itemsXPath = By.xpath("//ul[@data-autotest-id='subItems']//a");
-
+    /**
+     * xpath кнопок Показать еще
+     */
     private By showMoreButton =  By.xpath("//ul[@data-autotest-id='subItems']//span[@role='button']");
-
+    /**
+     * Переход в каталог с увеличением окна браузера до максимального размера.
+     *
+     * @return текущая страница YandexBasePage
+     */
     @Step("Переходим в каталог")
     public YandexBasePage goToCatalogue() {
         WebDriverRunner.getWebDriver().manage().window().maximize();
         $(catalogue).click();
         return this;
     }
-
+    /**
+     * Наведение курсора на указанный раздел.
+     *
+     * @param category Название раздела, на который нужно навести курсор.
+     * @return текущая страница YandexBasePage
+     */
     @Step("Навести курсор на раздел {category}")
     public YandexBasePage hoverOver(String category) {
         $$(categoryXPath)
@@ -41,6 +52,14 @@ public class YandexBasePage extends BasePage {
                 .hover();
         return this;
     }
+    /**
+     * Переход в указанный раздел после нажатия кнопки "Показать еще" при необходимости.
+     * Если категория не найдена после нажатий, бросает исключение {@link NoSuchElementException}.
+     *
+     * @param item Название элемента раздела, в который необходимо перейти.
+     * @return страница YandexAfterSearchPage после перехода
+     * @throws NoSuchElementException если категория не найдена
+     */
     @Step("Перейти в раздел {item}")
     public YandexAfterSearchPage goToItem(String item) {
         SelenideElement categories = $$(itemsXPath).findBy(Condition.text(item));

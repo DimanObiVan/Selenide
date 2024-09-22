@@ -11,11 +11,14 @@ import com.codeborne.selenide.Configuration;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import static com.codeborne.selenide.Selenide.open;
+import static helpers.Properties.testsProperties;
+
 public class BaseTests {
     @BeforeAll
     public static void beforeAll(){
         Configuration.timeout = 10000;
-//        SelenideLogger.addListener("AllureSelenide",new CustomAllureSelenide().screenshots(true).savePageSource(true));
+        SelenideLogger.addListener("AllureSelenide",new CustomAllureSelenide().screenshots(true).savePageSource(true));
 
     }
 
